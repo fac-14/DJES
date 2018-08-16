@@ -1,5 +1,9 @@
 # DJES
 
+## Heroku link
+[See it on Heroku here!](https://desolate-lake-72795.herokuapp.com/)
+The above link should be pretty up-to-date. See below for instructions on how to ensure you see the latest version.
+
 ## How to set up and see the magic
 1. Clone repo (make sure it's this FAC-14 one, not the Sunuwars one that we've forked!)
 2. Run `psql` or `pgcli` on your command line
@@ -44,6 +48,8 @@ Functionality we were less close to completing:
 - Not at all mobile responsive. Very delicate layout/css as almost all time has been spent on back-end or front-end scripting rather than responsiveness, etc.
 
 ## Warnings
-The code is a bit of a mess at some points. We definitely reached one of the circles of Callback Hell, and mixing-in promises with the callbacks has made things a bit more confusing.
+- The code is a bit of a mess at some points. We definitely reached one of the circles of Callback Hell, and mixing-in promises with the callbacks has made things a bit more confusing.
+- As mentioned above, it's not at all responsive. Please view on widescreen!
+
 
 Enjoy!
