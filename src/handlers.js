@@ -67,9 +67,7 @@ const handlers = {
   },
 
   home(req, res) {
-    console.log("home reached");
     if (req.headers.cookie) {
-      console.log("checking cookie");
       const sessionId = req.headers.cookie.split("=")[1];
       passwords.checkSession(sessionId, (err, rows) => {
         if (err) {
@@ -79,15 +77,11 @@ const handlers = {
           res.writeHead(401, { "Content-Type": "text/html" });
           res.end("<h1>Forbidden Access</h1>");
         } else {
-          console.log("cookie valid");
           fs.readFile(buildPath("index-loggedin.html"), (err, file) => {
-            console.log("reading logged in html file");
             if (err) {
               res.writeHead(500, { "Content-Type": "text/html" });
               res.end("<h1>Server Error</h1>");
-              console.log("home error");
             } else {
-              console.log("returning logged in html file");
               res.writeHead(200, { "Content-Type": "text/html" });
               res.end(file);
             }
@@ -99,7 +93,6 @@ const handlers = {
         if (err) {
           res.writeHead(500, { "Content-Type": "text/html" });
           res.end("<h1>Server Error</h1>");
-          console.log("home error");
         } else {
           res.writeHead(200, { "Content-Type": "text/html" });
           res.end(file);
@@ -109,12 +102,10 @@ const handlers = {
   },
 
   public(req, res, endpoint) {
-    console.log("endpoint: ", endpoint);
     fs.readFile(buildPath(endpoint), (err, file) => {
       if (err) {
         res.writeHead(404, { "Content-Type": "text/html" });
         res.end("<h1>Page not found</h1>");
-        console.log("public error");
       } else {
         res.writeHead(200, {
           "Content-Type": contentType[path.extname(endpoint)]
@@ -152,7 +143,6 @@ const handlers = {
                     sessionID,
                     email,
                     (err, result, sssionID) => {
-                      console.log("Store Session func reached");
                       if (err) {
                         res.writeHead(500, { "Content-Type": "text/html" });
                         res.end("<h1>Server Error in storeSession func</h1>");
@@ -180,7 +170,6 @@ const handlers = {
   register(req, res) {
     if (req.method === "POST") {
       handlers.collectData(req, (err, data) => {
-        console.log("collected data");
         if (err) {
           res.writeHead(500, { "Content-Type": "text/html" });
           res.end("<h1>Server Error</h1>");
@@ -190,11 +179,9 @@ const handlers = {
           !data["reg-password"] ||
           !data["fav-colour"]
         ) {
-          console.log("data: ", data);
           res.writeHead(500, { "Content-Type": "text/html" });
           res.end("<h1>Server Error</h1>");
         } else {
-          console.log(data);
           // sanitise data
           const name = data["reg-name"].replace(/[^a-z0-9_\- ]/gi, "");
           const email = data["reg-email"].replace(/[^a-z0-9._\-@+]/gi, "");
@@ -233,10 +220,7 @@ const handlers = {
                         sessionID,
                         email,
                         (err, result, sssionID) => {
-                          console.log("Store Session func reached");
                           if (err) {
-                            console.log("HERE");
-                            console.log(err);
                             res.writeHead(500, { "Content-Type": "text/html" });
                             res.end(
                               "<h1>Server Error in storeSession func</h1>"
@@ -282,7 +266,6 @@ const handlers = {
       if (err) {
         res.writeHead(500, { "Content-Type": "text/html" });
         res.end("<h1>Server Error</h1>");
-        console.log("search error");
       } else {
         res.writeHead(200, "Content-type: application/json");
         res.end(JSON.stringify(result));
@@ -293,7 +276,6 @@ const handlers = {
     if (req.method === "POST") {
       handlers.collectJSON(req, (err, parsedData) => {
         cookies.getUserDetails(req, (err, result) => {
-          console.log('results are in: ', result);
           postData(
             result.name,
             result.email,
@@ -302,7 +284,6 @@ const handlers = {
               if (err) {
                 res.writeHead(500, { "Content-Type": "text/html" });
                 res.end("<h1>Server Error</h1>");
-                console.log("postdata error");
               } else {
                 res.writeHead(302, { Location: "/success" });
                 res.end();
@@ -319,7 +300,6 @@ const handlers = {
       if (err) {
         res.writeHead(500, { "Content-Type": "text/html" });
         res.end("<h1>Server Error</h1>");
-        console.log("home error");
       } else {
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(file);
@@ -329,11 +309,9 @@ const handlers = {
   addItem(req, res) {
     // SQL query: Add user
     // SQL query: Add item from that user
-    console.log("addItem reached");
     if (req.method === "POST") {
       if (req.headers.cookie) {
         const sessionId = req.headers.cookie.split("=")[1];
-        console.log(sessionId);
         passwords.checkSession(sessionId, (err, rows) => {
           if (err) {
             res.writeHead(500, { "Content-Type": "text/html" });
@@ -368,7 +346,6 @@ const handlers = {
           }
         });
       } else {
-        console.log("no cookie");
         res.writeHead(401, { "Content-Type": "text/html" });
         res.end("<h1>401 Forbidden</h1>");
       }
@@ -388,10 +365,8 @@ const handlers = {
     //   if (err) {
     //     response.writeHead(500, "Content-Type:text/html");
     //     response.end("<h1>Sorry, there was a problem getting the users</h1>");
-    //     console.log(err);
     //   } else {
     getData("", (err, res) => {
-      console.log("reached again");
       if (err) {
         response.writeHead(500, "Content-Type:text/html");
         response.end("<h1>Sorry, there was a problem getting the users</h1>");

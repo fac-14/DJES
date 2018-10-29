@@ -43,7 +43,6 @@ submitItemBtn.addEventListener("click", function(e) {
   xhrPost.onreadystatechange = function() {
     setTimeout(() => {
       // horrible hacky fix for 302 redirect
-      console.log("submit item by lender successful!");
       request("/populate-all", "GET", updateDom);
     }, 500);
   };
@@ -65,7 +64,6 @@ submitItemBtn.addEventListener("click", function(e) {
 //   var xhrPost = new XMLHttpRequest();
 //   xhrPost.onreadystatechange = function() {
 //     if (xhrPost.readyState === 4 && xhrPost.status === 200) {
-//       console.log("post data response successful");
 //       reqForm.classList.add("hidden");
 //       var success = document.createElement("div");
 //       success.innerText = "Loan requested! :)";
@@ -87,13 +85,10 @@ submitItemBtn.addEventListener("click", function(e) {
 function borrow(id, name) {
   // reqForm.classList.remove("hidden");
   // itemIdInput.value = id;
-  // console.log("name: ", name);
   // borrowH3.innerText = "Borrow " + name.toLowerCase();
-  console.log(id, name);
   var xhrPost = new XMLHttpRequest();
   xhrPost.onreadystatechange = function() {
     if (xhrPost.readyState === 4 && xhrPost.status === 200) {
-      console.log("borrow data response successful");
       var success = document.createElement("div");
       success.innerText = "Loan requested! :)";
       successDiv.appendChild(success);
@@ -119,7 +114,6 @@ function borrow(id, name) {
 searchBtn.addEventListener("click", function(e) {
   e.preventDefault();
   var inputValue = encodeURIComponent(input.value);
-  console.log("input " + inputValue);
 
   // add validation alert if buttons gets clicked without input val
   if (inputValue.trim() == "") {
@@ -142,8 +136,6 @@ function updateDom(err, data) {
   if (err) {
     console.log(err);
   } else {
-    console.log("updateDom reached");
-
     var items = JSON.parse(data);
     var table = document.getElementById("items-table");
     clearList(table);
@@ -172,7 +164,6 @@ function updateDom(err, data) {
 
     if (items.length > 0) {
       items.forEach(function(item) {
-        console.log(item);
         // adding our item names
         var row = document.createElement("tr");
         var name = document.createElement("td");
@@ -247,7 +238,6 @@ regButton.addEventListener("click", function(e) {
 
   // checks that email is valid
   if (regEmail.validity.typeMismatch || regEmail.validity.valueMissing) {
-    console.log("reached");
     error.innerHTML = "Please enter a valid email address";
     error.className = "error";
     regEmail.classList.add("incorrect-field");
@@ -326,13 +316,10 @@ const psdLogin = document.getElementById("login-password");
 const error1 = document.getElementById("error1");
 
 emailLogin.addEventListener("focusout", function(e) {
-  console.log("HERE");
   if (!emailLogin.validity.valid) {
-    //console.log('email=',emailLogin.value);console.log('here')
     error1.innerHTML = "Please enter a valid email address";
     error1.className = "error";
     document.getElementById("login-email").classList.add("invalid-input");
-    console.log(emailLogin.classList);
   } else if (emailLogin.validity.valid) {
     emailLogin.classList.remove("invalid-input");
     error1.classList.remove("error");

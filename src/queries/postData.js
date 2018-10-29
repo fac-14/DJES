@@ -27,7 +27,6 @@ const checkUser = (email, cb) => {
     `SELECT id FROM users WHERE email=$1`,
     [email],
     (err, res) => {
-      console.log('checkUser result: ', res);
       if (err) return cb(err);
       if (res.rowCount === 1) cb(null, res);
       else cb(null, false);
@@ -48,7 +47,6 @@ const postData = (name, email, itemId, cb) => {
         [name, email],
         (err, res) => {
           if (err) {
-            console.log(err);
             return cb(err);
           }
           borrowerId = res.rows[0].id;
@@ -60,7 +58,6 @@ const postData = (name, email, itemId, cb) => {
 };
 
 const addItem = (name, description, lenderId, cb) => {
-  console.log("add item reached");
   dbConnection.query(
     `INSERT INTO items (name, description, lender_id) VALUES ('${name}', '${description}', ${lenderId}) RETURNING id`,
     (err, res) => {
