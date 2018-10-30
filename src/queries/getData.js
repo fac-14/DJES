@@ -23,7 +23,6 @@ const getPassword = (qry, cb) => {
     [qry], 
     (err, res) => {
       if (err) {
-        //console.log('DBQURERY');console.log(err);
         return cb(err); 
       }
       return cb(null, res.rows);
